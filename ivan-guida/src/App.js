@@ -3,7 +3,7 @@ import "./App.css";
 
 const App = () => {
   const [position, setPosition] = useState(0); // Track the car's Y position
-  const [reverse, setReverse] = useState(false); // Direction of movement
+  const [moving, setMoving] = useState(false); // Track if the car is moving
 
   const playElevatorMusic = () => {
     const audio = new Audio("/elevator-music.mp3");
@@ -11,22 +11,24 @@ const App = () => {
   };
 
   const handleMove = (gear) => {
+    if (moving) return; // Prevent overlapping movements
+
+    setMoving(true); // Start moving
     const speeds = {
-      1: 5,   // Slow speed for 1st gear
-      2: 10,  // Normal speed for 2nd gear
-      3: 15,  // Faster speed for 3rd gear
-      4: 20,  // High speed for 4th gear
-      5: 8,   // Slow down for the "fifth gear"
+      1: 5,   // Small movement for 1st gear
+      2: 10,  // Medium movement for 2nd gear
+      3: 15,  // Larger movement for 3rd gear
+      4: 20,  // Fastest movement for 4th gear
+      5: 8,   // Slow movement for 5th gear
     };
 
-    if (gear === "reverse") {
-      setReverse(true);
-      setPosition((prev) => prev - 5); // Move backward
-    } else {
-      setReverse(false);
-      setPosition((prev) => prev + speeds[gear]); // Move forward at the speed of the gear
-      if (gear === 5) playElevatorMusic(); // Play elevator music for the 5th gear
-    }
+    const movement = gear === "reverse" ? -10 : speeds[gear]; // Negative for reverse
+
+    if (gear === 5) playElevatorMusic(); // Play music for 5th gear
+
+    // Move the car and reset the state after the movement
+    setPosition((prev) => prev + movement);
+    setTimeout(() => setMoving(false), 500); // Stop movement after 500ms
   };
 
   return (
