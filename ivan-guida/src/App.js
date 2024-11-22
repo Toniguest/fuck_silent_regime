@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const App = () => {
-  const [position, setPosition] = useState(0); // Posizione orizzontale della macchina
+  const [position, setPosition] = useState(500); // Inizializza la macchina alla destra del contenitore
   const [intervalId, setIntervalId] = useState(null); // ID dell'intervallo corrente
   const [currentGear, setCurrentGear] = useState(null); // Marcia attuale
 
@@ -25,12 +25,12 @@ const App = () => {
 
     // Definisce la velocità in base alla marcia
     const speeds = {
-      1: 2,   // Velocità lenta per la prima
-      2: 4,   // Velocità media per la seconda
-      3: 6,   // Velocità più veloce per la terza
-      4: 8,   // Velocità massima per la quarta
-      5: 3,   // Velocità ridotta per la quinta
-      reverse: -4, // Retromarcia, muove verso sinistra
+      1: -2,   // Velocità lenta per la prima (verso sinistra)
+      2: -4,   // Velocità media per la seconda
+      3: -6,   // Velocità più veloce per la terza
+      4: -8,   // Velocità massima per la quarta
+      5: -3,   // Velocità ridotta per la quinta
+      reverse: 4, // Retromarcia, muove verso destra
     };
 
     if (gear === 5) {
@@ -42,11 +42,11 @@ const App = () => {
       setPosition((prev) => {
         const newPos = prev + speeds[gear];
 
-        // Se la macchina esce fuori dal limite del contenitore, ritorna all'inizio
-        if (newPos > 500) {
-          return 0; // Torna alla posizione iniziale
-        } else if (newPos < 0) {
-          return 500; // Torna alla fine se va in retromarcia
+        // Se la macchina esce fuori dal limite sinistro del contenitore, ritorna alla posizione iniziale
+        if (newPos < 0) {
+          return 500; // Torna alla destra del contenitore
+        } else if (newPos > 500) {
+          return 0; // Torna all'inizio se va troppo a destra in retromarcia
         } else {
           return newPos;
         }
