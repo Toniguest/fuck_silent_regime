@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const App = () => {
-  const [position, setPosition] = useState(0); // Track the car's Y position
-  const [moving, setMoving] = useState(false); // Track if the car is moving
+  const [position, setPosition] = useState(0); // Posizione della macchina
+  const [intervalId, setIntervalId] = useState(null); // ID dell'intervallo per fermarlo
 
   const playElevatorMusic = () => {
     const audio = new Audio("/elevator-music.mp3");
@@ -11,25 +11,41 @@ const App = () => {
   };
 
   const handleMove = (gear) => {
-    if (moving) return; // Prevent overlapping movements
+    // Ferma il movimento attuale
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
 
-    setMoving(true); // Start moving
+    // Definisce la velocità in base alla marcia
     const speeds = {
-      1: 5,   // Small movement for 1st gear
-      2: 10,  // Medium movement for 2nd gear
-      3: 15,  // Larger movement for 3rd gear
-      4: 20,  // Fastest movement for 4th gear
-      5: 8,   // Slow movement for 5th gear
+      1: 5,   // Velocità lenta per la prima
+      2: 10,  // Velocità media per la seconda
+      3: 15,  // Velocità più veloce per la terza
+      4: 20,  // Velocità massima per la quarta
+      5: 8,   // Velocità ridotta per la quinta
+      reverse: -10, // Retromarcia, muove verso l'alto
     };
 
-    const movement = gear === "reverse" ? -10 : speeds[gear]; // Negative for reverse
+    if (gear === 5) {
+      playElevatorMusic(); // Riproduce la musica per la quinta marcia
+    }
 
-    if (gear === 5) playElevatorMusic(); // Play music for 5th gear
+    // Imposta un nuovo movimento continuo
+    const newIntervalId = setInterval(() => {
+      setPosition((prev) => prev + speeds[gear]);
+    }, 100); // Aggiorna la posizione ogni 100ms
 
-    // Move the car and reset the state after the movement
-    setPosition((prev) => prev + movement);
-    setTimeout(() => setMoving(false), 500); // Stop movement after 500ms
+    setIntervalId(newIntervalId);
   };
+
+  // Pulisce l'intervallo quando il componente viene smontato
+  useEffect(() => {
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [intervalId]);
 
   return (
     <div className="App">
@@ -48,7 +64,7 @@ const App = () => {
           className="car"
           style={{
             transform: `translateY(${position}px)`,
-            transition: "transform 0.5s ease",
+            transition: "transform 0.1s linear",
           }}
         >
           🚗
