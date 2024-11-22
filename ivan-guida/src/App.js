@@ -76,15 +76,15 @@ const App = () => {
   return (
     <div className="App">
       <div className="buttons">
-        <button onClick={() => handleMove(1)}>Metti prima</button>
-        <button onClick={() => handleMove(2)}>Metti seconda</button>
-        <button onClick={() => handleMove(3)}>Metti terza</button>
-        <button onClick={() => handleMove(4)}>Metti quarta</button>
-        <button onClick={() => handleMove(5)}>Metti quinta</button>
+        <button onClick={() => handleMove(1)}>Prima</button>
+        <button onClick={() => handleMove(2)}>Seconda</button>
+        <button onClick={() => handleMove(3)}>Terza</button>
+        <button onClick={() => handleMove(4)}>Quarta</button>
+        <button onClick={() => handleMove(5)}>Quinta</button>
         <button onClick={() => handleMove("reverse")}>
-          Retromarcia parcheggio
+          Retromarcia
         </button>
-        <button onClick={handleStop}>Fermata</button>
+        <button onClick={handleStop}>Parcheggio</button>
       </div>
       <div className="road">
         <div
