@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 
 const App = () => {
-  const [position, setPosition] = useState(0);
-  const [speed, setSpeed] = useState(0);
-  const [reverse, setReverse] = useState(false);
+  const [position, setPosition] = useState(0); // Track the car's Y position
+  const [reverse, setReverse] = useState(false); // Direction of movement
 
   const playElevatorMusic = () => {
     const audio = new Audio("/elevator-music.mp3");
@@ -12,20 +11,21 @@ const App = () => {
   };
 
   const handleMove = (gear) => {
+    const speeds = {
+      1: 5,   // Slow speed for 1st gear
+      2: 10,  // Normal speed for 2nd gear
+      3: 15,  // Faster speed for 3rd gear
+      4: 20,  // High speed for 4th gear
+      5: 8,   // Slow down for the "fifth gear"
+    };
+
     if (gear === "reverse") {
       setReverse(true);
-      setSpeed(2);
+      setPosition((prev) => prev - 5); // Move backward
     } else {
       setReverse(false);
-      const speeds = {
-        1: 1,
-        2: 3,
-        3: 6,
-        4: 10,
-        5: 2, // Slow down for the "fifth gear"
-      };
-      setSpeed(speeds[gear]);
-      if (gear === 5) playElevatorMusic();
+      setPosition((prev) => prev + speeds[gear]); // Move forward at the speed of the gear
+      if (gear === 5) playElevatorMusic(); // Play elevator music for the 5th gear
     }
   };
 
@@ -46,7 +46,7 @@ const App = () => {
           className="car"
           style={{
             transform: `translateY(${position}px)`,
-            transition: `transform ${speed / 10}s linear`,
+            transition: "transform 0.5s ease",
           }}
         >
           🚗
