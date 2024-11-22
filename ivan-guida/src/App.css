@@ -24,7 +24,7 @@ button:hover {
 
 .road {
   margin-top: 50px;
-  width: 500px; /* Larghezza del contenitore */
+  width: 550px; /* Larghezza del contenitore */
   height: 100px; /* Altezza del contenitore */
   position: relative;
   background-color: #f4f4f4;
