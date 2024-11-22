@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const App = () => {
-  const [position, setPosition] = useState(0); // Posizione della macchina
-  const [intervalId, setIntervalId] = useState(null); // ID dell'intervallo per fermarlo
+  const [position, setPosition] = useState(0); // Posizione verticale della macchina
+  const [intervalId, setIntervalId] = useState(null); // ID dell'intervallo corrente
+  const [currentGear, setCurrentGear] = useState(null); // Marcia attuale
 
   const playElevatorMusic = () => {
     const audio = new Audio("/elevator-music.mp3");
@@ -11,10 +12,16 @@ const App = () => {
   };
 
   const handleMove = (gear) => {
+    if (gear === currentGear) {
+      return; // Se la marcia selezionata è uguale alla marcia attuale, non fare nulla
+    }
+
     // Ferma il movimento attuale
     if (intervalId) {
       clearInterval(intervalId);
     }
+
+    setCurrentGear(gear); // Aggiorna la marcia attuale
 
     // Definisce la velocità in base alla marcia
     const speeds = {
@@ -32,10 +39,29 @@ const App = () => {
 
     // Imposta un nuovo movimento continuo
     const newIntervalId = setInterval(() => {
-      setPosition((prev) => prev + speeds[gear]);
+      setPosition((prev) => {
+        const newPos = prev + speeds[gear];
+
+        // Se la macchina esce fuori dal limite del contenitore, ritorna all'inizio
+        if (newPos > 300) {
+          return 0; // Torna alla posizione iniziale
+        } else if (newPos < 0) {
+          return 300; // Torna alla fine se va in retromarcia
+        } else {
+          return newPos;
+        }
+      });
     }, 100); // Aggiorna la posizione ogni 100ms
 
     setIntervalId(newIntervalId);
+  };
+
+  const handleStop = () => {
+    if (intervalId) {
+      clearInterval(intervalId); // Ferma il movimento
+      setIntervalId(null);
+      setCurrentGear(null); // Reset della marcia attuale
+    }
   };
 
   // Pulisce l'intervallo quando il componente viene smontato
@@ -58,6 +84,7 @@ const App = () => {
         <button onClick={() => handleMove("reverse")}>
           Retromarcia parcheggio
         </button>
+        <button onClick={handleStop}>Fermata</button>
       </div>
       <div className="road">
         <div
