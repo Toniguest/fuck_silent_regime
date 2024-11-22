@@ -24,8 +24,8 @@ button:hover {
 
 .road {
   margin-top: 50px;
-  width: 100%;
-  height: 400px;
+  width: 500px; /* Limite del movimento della macchina */
+  height: 100px; /* Altezza del contenitore */
   position: relative;
   background-color: #f4f4f4;
   overflow: hidden;
@@ -36,6 +36,6 @@ button:hover {
 .car {
   font-size: 40px;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 30%; /* Posiziona la macchina verticalmente nel centro del contenitore */
+  transform: translateX(0);
 }

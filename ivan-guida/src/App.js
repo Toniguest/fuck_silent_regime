@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const App = () => {
-  const [position, setPosition] = useState(0); // Posizione verticale della macchina
+  const [position, setPosition] = useState(0); // Posizione orizzontale della macchina
   const [intervalId, setIntervalId] = useState(null); // ID dell'intervallo corrente
   const [currentGear, setCurrentGear] = useState(null); // Marcia attuale
 
@@ -25,12 +25,12 @@ const App = () => {
 
     // Definisce la velocità in base alla marcia
     const speeds = {
-      1: 5,   // Velocità lenta per la prima
-      2: 10,  // Velocità media per la seconda
-      3: 15,  // Velocità più veloce per la terza
-      4: 20,  // Velocità massima per la quarta
-      5: 8,   // Velocità ridotta per la quinta
-      reverse: -10, // Retromarcia, muove verso l'alto
+      1: 2,   // Velocità lenta per la prima
+      2: 4,   // Velocità media per la seconda
+      3: 6,   // Velocità più veloce per la terza
+      4: 8,   // Velocità massima per la quarta
+      5: 3,   // Velocità ridotta per la quinta
+      reverse: -4, // Retromarcia, muove verso sinistra
     };
 
     if (gear === 5) {
@@ -43,10 +43,10 @@ const App = () => {
         const newPos = prev + speeds[gear];
 
         // Se la macchina esce fuori dal limite del contenitore, ritorna all'inizio
-        if (newPos > 300) {
+        if (newPos > 500) {
           return 0; // Torna alla posizione iniziale
         } else if (newPos < 0) {
-          return 300; // Torna alla fine se va in retromarcia
+          return 500; // Torna alla fine se va in retromarcia
         } else {
           return newPos;
         }
@@ -90,7 +90,7 @@ const App = () => {
         <div
           className="car"
           style={{
-            transform: `translateY(${position}px)`,
+            transform: `translateX(${position}px)`,
             transition: "transform 0.1s linear",
           }}
         >
