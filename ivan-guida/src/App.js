@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import backgroundImage from "./img/background_ivan.png";
-import popupImage from "/faccia_salvatore.jpg";
 
 const App = () => {
   const [position, setPosition] = useState(1840); // Inizializza la macchina alla destra del contenitore
@@ -202,7 +201,7 @@ const App = () => {
 
       {showPopup && (
         <div className="popup">
-          <img src={popupImage} alt="Parcheggio" className="popup-image" />
+          <img src="/faccia_salvatore.jpg" alt="Parcheggio" className="popup-image" />
         </div>
       )}
 
