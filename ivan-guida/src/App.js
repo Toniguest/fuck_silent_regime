@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import backgroundImage from "./img/background_ivan.png";
-import popupImage from "./faccia_salvatore.jpg";
+import popupImage from "/faccia_salvatore.jpg";
 
 const App = () => {
   const [position, setPosition] = useState(1840); // Inizializza la macchina alla destra del contenitore
