@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./App.css";
 import backgroundImage from "./img/background_ivan.png";
 import popupImage from "./img/faccia_salvatore.jpg";
@@ -8,12 +8,31 @@ const App = () => {
   const [intervalId, setIntervalId] = useState(null); // ID dell'intervallo corrente
   const [currentGear, setCurrentGear] = useState(null); // Marcia attuale
   const [showPopup, setShowPopup] = useState(false); // Stato per mostrare il pop-up
+  const [isPlaying, setIsPlaying] = useState(false); // Stato per monitorare se l'audio è in riproduzione
+  const audioRef = useRef(null); // Riferimento all'oggetto audio
 
   // Riproduce la musica
   const playElevatorMusic = () => {
-    const audio = new Audio("./music/waiting-music.mp3"); // Percorso assoluto dalla cartella public
-    audio.play();
+    if (audioRef.current && !isPlaying) {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true); // Aggiorna lo stato a "in riproduzione"
+        })
+        .catch((error) => {
+          console.error("Errore durante la riproduzione dell'audio:", error);
+        });
+    }
   };
+
+  // Ferma la musica, funzione stabilizzata con useCallback
+  const stopElevatorMusic = useCallback(() => {
+    if (audioRef.current && isPlaying) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0; // Riporta l'audio all'inizio
+      setIsPlaying(false); // Aggiorna lo stato a "non in riproduzione"
+    }
+  }, [isPlaying]);
 
   // Gestisce il movimento della macchina
   const handleMove = (gear) => {
@@ -21,10 +40,11 @@ const App = () => {
       return; // Se la marcia selezionata è uguale alla marcia attuale, non fare nulla
     }
 
-    // Ferma il movimento attuale
+    // Ferma il movimento attuale e la musica
     if (intervalId) {
       clearInterval(intervalId);
     }
+    stopElevatorMusic();
 
     setShowPopup(false); // Chiudi il pop-up quando si seleziona un altro pulsante
     setCurrentGear(gear); // Aggiorna la marcia attuale
@@ -70,6 +90,7 @@ const App = () => {
       setCurrentGear(null); // Reset della marcia attuale
     }
     setShowPopup(true); // Mostra il pop-up solo quando si clicca su "Parcheggia bene"
+    stopElevatorMusic(); // Ferma l'audio quando la macchina si ferma
   };
 
   // Pulisce l'intervallo quando il componente viene smontato
@@ -78,8 +99,9 @@ const App = () => {
       if (intervalId) {
         clearInterval(intervalId);
       }
+      stopElevatorMusic(); // Ferma l'audio quando il componente viene smontato
     };
-  }, [intervalId]);
+  }, [intervalId, stopElevatorMusic]); // Aggiungi `stopElevatorMusic` come dipendenza
 
   return (
     <div 
@@ -91,12 +113,15 @@ const App = () => {
         height: "100vh"
       }}
     >
+      {/* Elemento audio nascosto per la riproduzione */}
+      <audio ref={audioRef} src="/waiting-music.mp3" /> {/* QUI inserisci il percorso del file audio */}
+
       <div className="buttons">
         <button onClick={() => handleMove(1)}>Metti prima</button>
         <button onClick={() => handleMove(2)}>Metti seconda</button>
         <button onClick={() => handleMove(3)}>Metti terza</button>
         <button onClick={() => handleMove(4)}>Metti quarta</button>
-        <button onClick={() => handleMove(5)}>Metti bene quinta</button>
+        <button onClick={() => handleMove(5)}>Metti quinta bene</button>
         <button onClick={() => handleMove("reverse")}>
           Retromarcia
         </button>
