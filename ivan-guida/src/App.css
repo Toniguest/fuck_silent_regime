@@ -1,6 +1,10 @@
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
+  background-image: url("/ivan-guida/src/img/background_ivan.png"); /* Immagine di sfondo */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }
 
 .buttons {
@@ -24,7 +28,7 @@ button:hover {
 
 .road {
   margin-top: 50px;
-  width: 550px; /* Larghezza del contenitore */
+  width: 100%; /* Larghezza del contenitore */
   height: 100px; /* Altezza del contenitore */
   position: relative;
   background-color: #f4f4f4;
@@ -38,4 +42,20 @@ button:hover {
   position: absolute;
   top: 30%; /* Posiziona la macchina verticalmente al centro del contenitore */
   transform: translateX(500px); /* Posizione iniziale alla destra del contenitore */
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-image {
+  width: 150px;
+  height: auto;
 }
