@@ -18,6 +18,12 @@ button:hover {
   background-color: #0056b3;
 }
 
+button:disabled,
+.disabled-button {
+  background-color: #cccccc; /* Colore per i pulsanti disabilitati */
+  cursor: not-allowed;
+}
+
 .road {
   margin-top: 50px;
   width: 99%; /* Larghezza del contenitore */
@@ -30,7 +36,7 @@ button:hover {
 }
 
 .car {
-  font-size: 40px;
+  font-size: 50px;
   position: absolute;
   top: 30%; /* Posiziona la macchina verticalmente al centro del contenitore */
   transform: translateX(500px); /* Posizione iniziale alla destra del contenitore */
@@ -45,9 +51,70 @@ button:hover {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Assicurati che il popup sia sopra tutti gli altri elementi */
 }
 
 .popup-image {
   width: 150px;
   height: auto;
+}
+
+/* Media query per adattamento mobile */
+@media (max-width: 768px) {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button {
+    width: 80%; /* Riduce la larghezza del pulsante per adattarsi a schermi più piccoli */
+    margin: 10px 0; /* Aggiunge spazio tra i pulsanti */
+  }
+
+  .road {
+    height: 80px; /* Riduce l'altezza della "road" per adattarsi allo schermo */
+    margin-top: 30px; /* Riduce il margine superiore per un aspetto più compatto */
+  }
+
+  .car {
+    font-size: 30px; /* Riduce la dimensione della macchina su schermi più piccoli */
+  }
+
+  .popup {
+    width: 90%; /* Assicura che il popup si adatti bene agli schermi più piccoli */
+    padding: 15px; /* Riduce il padding per adattarsi meglio */
+  }
+
+  .popup-image {
+    width: 120px; /* Riduce la larghezza dell'immagine nel popup */
+  }
+}
+
+@media (max-width: 480px) {
+  .buttons {
+    width: 100%;
+  }
+
+  button {
+    width: 90%; /* Aumenta la larghezza dei pulsanti per migliorare l'usabilità sui telefoni */
+  }
+
+  .road {
+    height: 101px; /* Riduce ulteriormente l'altezza della "road" per schermi più piccoli */
+    margin-top: 20px;
+  }
+
+  .car {
+    font-size: 25px; /* Riduce ancora la dimensione della macchina per adattarsi a schermi molto piccoli */
+  }
+
+  .popup {
+    width: 95%; /* Assicura che il popup occupi quasi tutto lo schermo sui dispositivi più piccoli */
+    padding: 12px;
+  }
+
+  .popup-image {
+    width: 100px; /* Riduce ulteriormente la larghezza dell'immagine nel popup */
+  }
 }
