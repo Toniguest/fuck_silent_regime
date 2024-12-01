@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import backgroundImage from "./img/background_ivan.png";
+import popupImage from "./img/faccia_salvatore.jpg";
 
 const App = () => {
   const [position, setPosition] = useState(1850); // Inizializza la macchina alla destra del contenitore
@@ -49,7 +50,7 @@ const App = () => {
 
         // Se la macchina esce fuori dal limite sinistro del contenitore, ritorna alla posizione iniziale
         if (newPos < 0) {
-          return 1924; // Torna alla destra del contenitore
+          return 1850; // Torna alla destra del contenitore
         } else if (newPos > 1850) {
           return 0; // Torna all'inizio se va troppo a destra in retromarcia
         } else {
@@ -104,7 +105,7 @@ const App = () => {
 
       {showPopup && (
         <div className="popup">
-          <img src="./img/Faccia_salvatore.jpg" alt="Parcheggio" className="popup-image" />
+          <img src={popupImage} alt="Parcheggio" className="popup-image" />
         </div>
       )}
 

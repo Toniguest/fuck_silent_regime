@@ -3,10 +3,6 @@
   font-family: Arial, sans-serif;
 }
 
-.buttons {
-  margin: 20px;
-}
-
 button {
   margin: 5px;
   padding: 10px 20px;
@@ -24,7 +20,7 @@ button:hover {
 
 .road {
   margin-top: 50px;
-  width: 100%; /* Larghezza del contenitore */
+  width: 99%; /* Larghezza del contenitore */
   height: 100px; /* Altezza del contenitore */
   position: relative;
   background-color: #f4f4f4;
