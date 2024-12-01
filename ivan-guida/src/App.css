@@ -1,10 +1,6 @@
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
-  background-image: url("/background_ivan.png"); /* Immagine di sfondo */
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
 }
 
 .buttons {

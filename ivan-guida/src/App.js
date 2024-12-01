@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import backgroundImage from "./img/background_ivan.png";
 
 const App = () => {
   const [position, setPosition] = useState(1924); // Inizializza la macchina alla destra del contenitore
@@ -81,7 +82,15 @@ const App = () => {
   }, [intervalId]);
 
   return (
-    <div className="App">
+    <div 
+      className="App"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "100vh"
+      }}
+    >
       <div className="buttons">
         <button onClick={() => handleMove(1)}>Metti prima</button>
         <button onClick={() => handleMove(2)}>Metti seconda</button>
