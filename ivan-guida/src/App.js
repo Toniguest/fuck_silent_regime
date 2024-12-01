@@ -3,16 +3,18 @@ import "./App.css";
 import backgroundImage from "./img/background_ivan.png";
 
 const App = () => {
-  const [position, setPosition] = useState(1924); // Inizializza la macchina alla destra del contenitore
+  const [position, setPosition] = useState(1850); // Inizializza la macchina alla destra del contenitore
   const [intervalId, setIntervalId] = useState(null); // ID dell'intervallo corrente
   const [currentGear, setCurrentGear] = useState(null); // Marcia attuale
   const [showPopup, setShowPopup] = useState(false); // Stato per mostrare il pop-up
 
+  // Riproduce la musica
   const playElevatorMusic = () => {
-    const audio = new Audio("/ivan-guida/src/music/waiting-music-116216.mp3");
+    const audio = new Audio("./music/waiting-music.mp3"); // Percorso assoluto dalla cartella public
     audio.play();
   };
 
+  // Gestisce il movimento della macchina
   const handleMove = (gear) => {
     if (gear === currentGear) {
       return; // Se la marcia selezionata è uguale alla marcia attuale, non fare nulla
@@ -40,10 +42,6 @@ const App = () => {
       playElevatorMusic(); // Riproduce la musica per la quinta marcia
     }
 
-    if (gear === "reverse") {
-      setShowPopup(true); // Mostra il pop-up quando è in retromarcia
-    }
-
     // Imposta un nuovo movimento continuo
     const newIntervalId = setInterval(() => {
       setPosition((prev) => {
@@ -51,8 +49,8 @@ const App = () => {
 
         // Se la macchina esce fuori dal limite sinistro del contenitore, ritorna alla posizione iniziale
         if (newPos < 0) {
-          return 500; // Torna alla destra del contenitore
-        } else if (newPos > 1924) {
+          return 1924; // Torna alla destra del contenitore
+        } else if (newPos > 1850) {
           return 0; // Torna all'inizio se va troppo a destra in retromarcia
         } else {
           return newPos;
@@ -63,13 +61,14 @@ const App = () => {
     setIntervalId(newIntervalId);
   };
 
+  // Gestisce la fermata/parcheggio della macchina
   const handleStop = () => {
     if (intervalId) {
       clearInterval(intervalId); // Ferma il movimento
       setIntervalId(null);
       setCurrentGear(null); // Reset della marcia attuale
     }
-    setShowPopup(false); // Chiudi il pop-up quando si ferma
+    setShowPopup(true); // Mostra il pop-up solo quando si clicca su "Parcheggia bene"
   };
 
   // Pulisce l'intervallo quando il componente viene smontato
@@ -105,7 +104,7 @@ const App = () => {
 
       {showPopup && (
         <div className="popup">
-          <img src="/ivan-guida/src/img/Faccia_salvatore.jpg" alt="Parcheggio" className="popup-image" />
+          <img src="./img/Faccia_salvatore.jpg" alt="Parcheggio" className="popup-image" />
         </div>
       )}
 
