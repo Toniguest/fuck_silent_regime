@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
-import backgroundImage from "./img/background_ivan.png";
+import backgroundImage from "./img/latest.png";
 
 const App = () => {
   const [position, setPosition] = useState(1840); // Inizializza la macchina alla destra del contenitore
