@@ -165,7 +165,7 @@ const App = () => {
         height: "100vh"
       }}
     >
-      <div className="buttons">
+      {/* <div className="buttons">
         <button onClick={() => handleMove(1)}>Metti prima</button>
         <button
           onClick={() => handleMove(2)}
@@ -216,7 +216,7 @@ const App = () => {
         >
           🚗
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
